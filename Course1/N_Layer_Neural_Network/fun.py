@@ -1,6 +1,6 @@
 import numpy as np
 from Course1.N_Layer_Neural_Network.testCases_v4a import *
-
+from Course1.N_Layer_Neural_Network.dnn_utils_v2 import *
 def initialize_parameters(n_x, n_h, n_y):
     """
     Argument:
@@ -16,11 +16,11 @@ def initialize_parameters(n_x, n_h, n_y):
                     b2 -- bias vector of shape (n_y, 1)
     """
     w1 = np.random.randn(n_h, n_x)*0.01
-    b1 = np.zeros(n_x, 1)
+    b1 = np.zeros((n_x, 1))
     w2 = np.random.randn(n_y, n_h)*0.01
-    b2 = np.zeros(n_y, 1)
+    b2 = np.zeros((n_y, 1))
     assert (w1.shape == (n_h, n_x))
-    assert (b1.shape == (n_h, 1))
+    assert (b1.shape == (n_x, 1))
     assert (w2.shape == (n_y, n_h))
     assert (b2.shape == (n_y, 1))
 
@@ -43,15 +43,16 @@ def initialize_parameters_deep(layer_dims=[5,4,3]):
                     Wl -- weight matrix of shape (layer_dims[l], layer_dims[l-1])
                     bl -- bias vector of shape (layer_dims[l], 1)
     """
+    np.random.seed(3)
     parameters = {}
-    L = len(layer_dims)
+    L = len(layer_dims)            # number of layers in the network
+
     for l in range(1, L):
-        parameters["w" + str(l)] = np.random.randn(layer_dims[l],layer_dims[l-1]) * 0.01
-        parameters["b" + str(l)] = np.random.randn(layer_dims[l],1)
-
-    assert(parameters['W' + str(l)].shape == (layer_dims[l], layer_dims[l-1]))
-    assert(parameters['b' + str(l)].shape == (layer_dims[l], 1))
-
+        ### START CODE HERE ### (≈ 2 lines of code)
+        parameters['W' + str(l)] = np.random.randn(layer_dims[l], layer_dims[l-1]) * 0.01
+        parameters['b' + str(l)] = abs(np.random.randn(layer_dims[l], 1) * 0)
+    assert (parameters['W' + str(l)].shape == (layer_dims[l], layer_dims[l - 1]))
+    assert (parameters['b' + str(l)].shape == (layer_dims[l], 1))
     return parameters
 
 
